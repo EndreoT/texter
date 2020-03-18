@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace Texter.DataTransferObject
 {
-    public class TodoItemDTO
+    public class MessageDTO
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public bool IsComplete { get; set; }
+        public string SourceAddr { get; set; }
+        public string DestAddr { get; set; }
+        public string Content { get; set; }
     }
 }
