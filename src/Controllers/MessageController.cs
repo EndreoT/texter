@@ -30,21 +30,37 @@ namespace Texter.Controllers
             return await _messageService.ListAsync();
         }
 
-        //    [HttpGet("{id}")]
-        //    public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MessageDTO>> GetById(long id)
+        {
+            MessageDTO messageDTO = await _messageService.GetById(id);
+
+            if (messageDTO == null)
+            {
+                return NotFound();
+            }
+
+            return messageDTO;
+        }
+
+        //[HttpPost]
+        //public async Task<ActionResult<MessageDTO>> CreateMessage(MessageDTO messageDTO)
+        //{
+        //    var todoItem = new TodoItem
         //    {
-        //        var todoItemDTO = await _context.Messages
-        //            .Where(x => x.Id == id)
-        //            .Select(x => ItemToDTO(x))
-        //            .SingleAsync();
+        //        IsComplete = todoItemDTO.IsComplete,
+        //        Name = todoItemDTO.Name
+        //    };
 
-        //        if (todoItemDTO == null)
-        //        {
-        //            return NotFound();
-        //        }
+        //    _context.Messages.Add(todoItem);
+        //    await _context.SaveChangesAsync();
 
-        //        return todoItemDTO;
-        //    }
+        //    return CreatedAtAction(
+        //        nameof(GetTodoItem),
+        //        new { id = todoItem.Id },
+        //        ItemToDTO(todoItem));
+        //}
+
 
         //    [HttpPut("{id}")]
         //    public async Task<IActionResult> UpdateTodoItem(long id, TodoItemDTO todoItemDTO)

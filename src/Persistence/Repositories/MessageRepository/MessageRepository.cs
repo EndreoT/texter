@@ -17,20 +17,29 @@ namespace Texter.Persistence.Repositories.MessageRepository
     {
         public MessageRepository(AppDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<MessageDTO>> ListAsync()
+        public async Task<IEnumerable<Message>> ListAsync()
         {
-            return await _context.Messages.Select(message => ToMessageDTO(message)).ToListAsync();
-        }   
-
-        private static MessageDTO ToMessageDTO(Message message)
-        {
-            return new MessageDTO
-            {
-                Id = message.Id,
-                SourceAddr = message.SourceAddr,
-                DestAddr = message.DestAddr,
-                Content = message.Content,
-            };
+            return await _context.Messages.ToListAsync();
         }
+
+        public async Task<Message> GetById(long id)
+        {
+            try
+            {
+                return await _context.Messages
+                   .Where(message => message.Id == id)
+                   .SingleAsync();
+            } catch (InvalidOperationException)
+            {
+                return null;
+            }
+        }
+
+        //public static int CreateMessage(MessageDTO message)
+        //{
+
+        //}
+
+
     }
 }
