@@ -65,6 +65,11 @@ namespace Texter.Services.MessageServices
             }
             try
             {
+                //Update all the fields
+                foundMessage.Content = messageDTO.Content;
+                foundMessage.SourceAddr = messageDTO.SourceAddr;
+                foundMessage.DestAddr = messageDTO.DestAddr;
+
                 _messageRepository.UpdateMessageAsync(foundMessage);
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(foundMessage);
 
@@ -74,8 +79,6 @@ namespace Texter.Services.MessageServices
             {
                 return new SaveMessageResponse($"An error occurred when saving the message: {ex.Message}");
             }
-
-            
         }
     }
 }
