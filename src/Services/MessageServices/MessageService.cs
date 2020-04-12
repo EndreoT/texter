@@ -38,7 +38,7 @@ namespace Texter.Services.MessageServices
             return resource;
         }
 
-        public async Task<SaveMessageResponse> CreateMessageAsync(SaveMessageDTO messageDTO)
+        public async Task<MessageResponse> CreateMessageAsync(SaveMessageDTO messageDTO)
         {
             Message message = _mapper.Map<SaveMessageDTO, Message>(messageDTO);
             
@@ -49,19 +49,19 @@ namespace Texter.Services.MessageServices
 
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
 
-                return new SaveMessageResponse(messageResource);
+                return new MessageResponse(messageResource);
             } catch (Exception ex)
 		    {
                 // Do some logging stuff
-                return new SaveMessageResponse($"An error occurred when saving the message: {ex.Message}");
+                return new MessageResponse($"An error occurred when saving the message: {ex.Message}");
             }
         }
-        public async Task<SaveMessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO)
+        public async Task<MessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO)
         {
             Message foundMessage = await _messageRepository.GetByIdAsync(id);
             if (foundMessage == null)
             {
-                return new SaveMessageResponse($"Message with id: {id} does not exist");
+                return new MessageResponse($"Message with id: {id} does not exist");
             }
             try
             {
@@ -75,11 +75,33 @@ namespace Texter.Services.MessageServices
 
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(foundMessage);
 
-                return new SaveMessageResponse(messageResource);
+                return new MessageResponse(messageResource);
             }
             catch(Exception ex)
             {
-                return new SaveMessageResponse($"An error occurred when saving the message: {ex.Message}");
+                return new MessageResponse($"An error occurred when saving the message: {ex.Message}");
+            }
+        }
+
+        public async Task<MessageResponse> DeleteMessageAsync(long id)
+        {
+            Message foundMessage = await _messageRepository.GetByIdAsync(id);
+            if (foundMessage == null)
+            {
+                return new MessageResponse($"Message with id: {id} does not exist");
+            }
+            try
+            {
+                _messageRepository.DeleteMessageAsync(foundMessage);
+                await _unitOfWork.CompleteAsync();
+
+                FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(foundMessage);
+
+                return new MessageResponse(messageResource);
+            }
+            catch (Exception ex)
+            {
+                return new MessageResponse($"An error occurred when deleting the message: {ex.Message}");
             }
         }
     }

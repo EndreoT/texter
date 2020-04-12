@@ -13,8 +13,10 @@ namespace Texter.Domain.Services
 
         public Task<FromMessageDTO> GetById(long id);
 
-        public Task<SaveMessageResponse> CreateMessageAsync(SaveMessageDTO message);
+        public Task<MessageResponse> CreateMessageAsync(SaveMessageDTO message);
 
-        public Task<SaveMessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO);
+        public Task<MessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO);
+
+        public Task<MessageResponse> DeleteMessageAsync(long id);
     }
 }
