@@ -75,50 +75,17 @@ namespace Texter.Controllers
             return Ok(result.MessageDTO);
         }
 
-        //    [HttpPost]
-        //    public async Task<ActionResult<TodoItemDTO>> CreateTodoItem(TodoItemDTO todoItemDTO)
-        //    {
-        //        var todoItem = new TodoItem
-        //        {
-        //            IsComplete = todoItemDTO.IsComplete,
-        //            Name = todoItemDTO.Name
-        //        };
 
-        //        _context.Messages.Add(todoItem);
-        //        await _context.SaveChangesAsync();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMessage(long id)
+        {
+            MessageResponse result = await _messageService.DeleteMessageAsync(id);
 
-        //        return CreatedAtAction(
-        //            nameof(GetTodoItem),
-        //            new { id = todoItem.Id },
-        //            ItemToDTO(todoItem));
-        //    }
+            if (!result.Success)
+                return BadRequest(result.Message);
 
-        //    [HttpDelete("{id}")]
-        //    public async Task<IActionResult> DeleteTodoItem(long id)
-        //    {
-        //        var todoItem = await _context.Messages.FindAsync(id);
-
-        //        if (todoItem == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        _context.Messages.Remove(todoItem);
-        //        await _context.SaveChangesAsync();
-
-        //        return NoContent();
-        //    }
-
-        //    private bool TodoItemExists(long id) =>
-        //         _context.Messages.Any(e => e.Id == id);
-
-        //    private static TodoItemDTO ItemToDTO(TodoItem todoItem) =>
-        //        new TodoItemDTO
-        //        {
-        //            Id = todoItem.Id,
-        //            Name = todoItem.Name,
-        //            IsComplete = todoItem.IsComplete
-        //        };
+            return Ok(result.MessageDTO);
+        }
     }
 
 }
