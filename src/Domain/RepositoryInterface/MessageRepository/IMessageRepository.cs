@@ -17,7 +17,7 @@ namespace Texter.Domain.RepositoryInterface.MessageRepository
 
         public void UpdateMessageAsync(Message message);
 
-        public Task DeleteMessageAsync(Message message);
+        public Task DeleteMessageAsync(long id);
 
     }
 }

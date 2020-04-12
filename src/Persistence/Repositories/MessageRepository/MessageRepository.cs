@@ -47,7 +47,7 @@ namespace Texter.Persistence.Repositories.MessageRepository
 
         public async Task DeleteMessageAsync(long id)
         {
-
+            return;
         }
     }
 }

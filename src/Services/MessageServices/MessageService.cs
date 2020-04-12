@@ -71,6 +71,8 @@ namespace Texter.Services.MessageServices
                 foundMessage.DestAddr = messageDTO.DestAddr;
 
                 _messageRepository.UpdateMessageAsync(foundMessage);
+                await _unitOfWork.CompleteAsync();
+
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(foundMessage);
 
                 return new SaveMessageResponse(messageResource);

@@ -61,34 +61,19 @@ namespace Texter.Controllers
         }
 
 
-        //    [HttpPut("{id}")]
-        //    public async Task<IActionResult> UpdateTodoItem(long id, TodoItemDTO todoItemDTO)
-        //    {
-        //        if (id != todoItemDTO.Id)
-        //        {
-        //            return BadRequest();
-        //        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMessage(long id, SaveMessageDTO saveMessage)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
 
-        //        var todoItem = await _context.Messages.FindAsync(id);
-        //        if (todoItem == null)
-        //        {
-        //            return NotFound();
-        //        }
+            SaveMessageResponse result = await _messageService.UpdateMessageAsync(id, saveMessage);
 
-        //        todoItem.Name = todoItemDTO.Name;
-        //        todoItem.IsComplete = todoItemDTO.IsComplete;
+            if (!result.Success)
+                return BadRequest(result.Message);
 
-        //        try
-        //        {
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException) when (!TodoItemExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return NoContent();
-        //    }
+            return Ok(result.MessageDTO);
+        }
 
         //    [HttpPost]
         //    public async Task<ActionResult<TodoItemDTO>> CreateTodoItem(TodoItemDTO todoItemDTO)
