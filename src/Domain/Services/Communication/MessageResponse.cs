@@ -6,11 +6,11 @@ using Texter.DataTransferObject;
 
 namespace Texter.Domain.Services.Communication
 {
-    public class SaveMessageResponse : BaseResponse
+    public class MessageResponse : BaseResponse
     {
         public FromMessageDTO MessageDTO { get; private set; }
 
-        private SaveMessageResponse(bool success, string message, FromMessageDTO messageDTO) : base(success, message)
+        private MessageResponse(bool success, string message, FromMessageDTO messageDTO) : base(success, message)
         {
             MessageDTO = messageDTO;
         }
@@ -20,7 +20,7 @@ namespace Texter.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Saved message.</param>
         /// <returns>Response.</returns>
-        public SaveMessageResponse(FromMessageDTO messageDTO) : this(true, string.Empty, messageDTO)
+        public MessageResponse(FromMessageDTO messageDTO) : this(true, string.Empty, messageDTO)
         { }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Texter.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public SaveMessageResponse(string messageString) : this(false, messageString, null)
+        public MessageResponse(string messageString) : this(false, messageString, null)
         { }
     }
 }
