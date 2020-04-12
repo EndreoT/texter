@@ -22,7 +22,7 @@ namespace Texter.Persistence.Repositories.MessageRepository
             return await _context.Messages.ToListAsync();
         }
 
-        public async Task<Message> GetById(long id)
+        public async Task<Message> GetByIdAsync(long id)
         {
             try
             {
@@ -35,11 +35,9 @@ namespace Texter.Persistence.Repositories.MessageRepository
             }
         }
 
-        //public static int CreateMessage(MessageDTO message)
-        //{
-
-        //}
-
-
+        public async Task CreateMessageAsync(Message message)
+        {
+            await _context.Messages.AddAsync(message);
+        }
     }
 }

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Texter.Domain.Models;
 using Texter.Persistence.Context;
-using Texter.Domain.ServiceInterface;
+using Texter.Domain.Services;
 using Texter.Services.MessageServices;
 using Texter.DataTransferObject;
+using Texter.ExtensionMethods;
+using Texter.Domain.Services.Communication;
 
 namespace Texter.Controllers
 {
@@ -25,15 +27,15 @@ namespace Texter.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<MessageDTO>> GetMessages()
+        public async Task<IEnumerable<FromMessageDTO>> GetMessages()
         {
             return await _messageService.ListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MessageDTO>> GetById(long id)
+        public async Task<ActionResult<FromMessageDTO>> GetById(long id)
         {
-            MessageDTO messageDTO = await _messageService.GetById(id);
+            FromMessageDTO messageDTO = await _messageService.GetById(id);
 
             if (messageDTO == null)
             {
@@ -43,23 +45,20 @@ namespace Texter.Controllers
             return messageDTO;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<MessageDTO>> CreateMessage(MessageDTO messageDTO)
-        //{
-        //    var todoItem = new TodoItem
-        //    {
-        //        IsComplete = todoItemDTO.IsComplete,
-        //        Name = todoItemDTO.Name
-        //    };
+        [HttpPost]
+        public async Task<IActionResult> CreateMessage([FromBody] SaveMessageDTO saveMessageDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
 
-        //    _context.Messages.Add(todoItem);
-        //    await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction(
-        //        nameof(GetTodoItem),
-        //        new { id = todoItem.Id },
-        //        ItemToDTO(todoItem));
-        //}
+            SaveMessageResponse result = await _messageService.CreateMessageAsync(saveMessageDTO);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(result.MessageDTO);
+        }
 
 
         //    [HttpPut("{id}")]

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Texter.DataTransferObject
 {
-    public class MessageDTO
+    public class FromMessageDTO
     {
         public long Id { get; set; }
         public string SourceAddr { get; set; }

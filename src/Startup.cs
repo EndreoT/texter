@@ -13,10 +13,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Texter.Persistence.Context;
-using Texter.Domain.ServiceInterface;
+using Texter.Domain.Services;
 using Texter.Services.MessageServices;
 using Texter.Domain.RepositoryInterface.MessageRepository;
 using Texter.Persistence.Repositories.MessageRepository;
+using Texter.Domain.RepositoryInterface;
+using Texter.Persistence.Repositories;
 
 namespace Texter
 {
@@ -42,6 +44,7 @@ namespace Texter
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
