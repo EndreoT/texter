@@ -14,5 +14,7 @@ namespace Texter.Domain.Services
         public Task<FromMessageDTO> GetById(long id);
 
         public Task<SaveMessageResponse> CreateMessageAsync(SaveMessageDTO message);
+
+        public Task<SaveMessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO);
     }
 }
