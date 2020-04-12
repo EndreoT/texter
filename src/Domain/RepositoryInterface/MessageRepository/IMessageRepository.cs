@@ -15,9 +15,9 @@ namespace Texter.Domain.RepositoryInterface.MessageRepository
 
         public Task CreateMessageAsync(Message message);
 
-        public Task UpdateMessageAsync(Message message);
+        public void UpdateMessageAsync(Message message);
 
-        public Task DeleteMessageAsync(long id);
+        public Task DeleteMessageAsync(Message message);
 
     }
 }

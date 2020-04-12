@@ -39,5 +39,15 @@ namespace Texter.Persistence.Repositories.MessageRepository
         {
             await _context.Messages.AddAsync(message);
         }
+
+        public void UpdateMessageAsync(Message message)
+        {
+            _context.Messages.Update(message);
+        }
+
+        public async Task DeleteMessageAsync(long id)
+        {
+
+        }
     }
 }

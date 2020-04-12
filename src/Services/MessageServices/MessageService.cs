@@ -55,6 +55,27 @@ namespace Texter.Services.MessageServices
                 // Do some logging stuff
                 return new SaveMessageResponse($"An error occurred when saving the message: {ex.Message}");
             }
-}
+        }
+        public async Task<SaveMessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO)
+        {
+            Message foundMessage = await _messageRepository.GetByIdAsync(id);
+            if (foundMessage == null)
+            {
+                return new SaveMessageResponse($"Message with id: {id} does not exist");
+            }
+            try
+            {
+                _messageRepository.UpdateMessageAsync(foundMessage);
+                FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(foundMessage);
+
+                return new SaveMessageResponse(messageResource);
+            }
+            catch(Exception ex)
+            {
+                return new SaveMessageResponse($"An error occurred when saving the message: {ex.Message}");
+            }
+
+            
+        }
     }
 }
