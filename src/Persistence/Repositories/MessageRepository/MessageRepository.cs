@@ -45,9 +45,9 @@ namespace Texter.Persistence.Repositories.MessageRepository
             _context.Messages.Update(message);
         }
 
-        public async Task DeleteMessageAsync(long id)
+        public async Task DeleteMessageAsync(Message message)
         {
-            return;
+            _context.Messages.Remove(message);
         }
     }
 }

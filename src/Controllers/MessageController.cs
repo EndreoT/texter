@@ -52,7 +52,7 @@ namespace Texter.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
 
-            SaveMessageResponse result = await _messageService.CreateMessageAsync(saveMessageDTO);
+            MessageResponse result = await _messageService.CreateMessageAsync(saveMessageDTO);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -67,7 +67,7 @@ namespace Texter.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            SaveMessageResponse result = await _messageService.UpdateMessageAsync(id, saveMessage);
+            MessageResponse result = await _messageService.UpdateMessageAsync(id, saveMessage);
 
             if (!result.Success)
                 return BadRequest(result.Message);
