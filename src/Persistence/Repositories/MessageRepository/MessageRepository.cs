@@ -27,7 +27,7 @@ namespace Texter.Persistence.Repositories.MessageRepository
             try
             {
                 return await _context.Messages
-                   .Where(message => message.Id == id)
+                   .Where(message => message.MessageId == id)
                    .SingleAsync();
             } catch (InvalidOperationException)
             {
