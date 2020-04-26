@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Texter.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Texter.DataTransferObject
@@ -9,14 +10,14 @@ namespace Texter.DataTransferObject
     public class SaveMessageDTO
     {
         [Required]
-        [MaxLength(30)]
         public string SourceAddr { get; set; }
 
         [Required]
-        [MaxLength(30)]
-        public string DestAddr { get; set; }
+
+        public string DestinationAddr { get; set; }
 
         [Required]
+        [MaxLength(500)]
         public string Content { get; set; }
     }
 }
