@@ -5,9 +5,9 @@ using Texter.DataTransferObject;
 
 namespace TexterMapping
 {
-    public class MessageModelToResourceProfile : Profile
+    public class ResourceToMessageModelProfile : Profile
     {
-        public MessageModelToResourceProfile()
+        public ResourceToMessageModelProfile()
         {
             CreateMap<SaveMessageDTO, Message>();
         }

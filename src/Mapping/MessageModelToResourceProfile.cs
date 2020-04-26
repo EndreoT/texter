@@ -2,7 +2,7 @@
 using Texter.Domain.Models;
 using Texter.DataTransferObject;
 
-namespace Supermarket.API.Mapping
+namespace TexterMapping
 {
     public class MessageModelToResourceProfile : Profile
     {
