@@ -35,10 +35,13 @@ namespace Texter
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContextPool<AppDbContext>(options => options
-                // replace with your connection string
-                .UseMySql("server=127.0.0.1;uid=root;pwd=1234;database=texter"
-            ));
+            //services.AddDbContextPool<AppDbContext>(options => options
+            //    // replace with your connection string
+            //    .UseMySql("server=127.0.0.1;uid=root;pwd=1234;database=texter"
+            //));
+            services.AddDbContext<AppDbContext>(
+                item => item.UseMySql(Configuration.GetConnectionString("DefaultConnection"))
+                );
 
             services.AddControllers();
             services.AddScoped<IMessageRepository, MessageRepository>();

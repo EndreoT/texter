@@ -68,7 +68,7 @@ namespace Texter.Services.MessageServices
                 //Update all the fields
                 foundMessage.Content = messageDTO.Content;
                 foundMessage.SourceAddr = messageDTO.SourceAddr;
-                foundMessage.DestAddr = messageDTO.DestAddr;
+                foundMessage.DestinationAddr = messageDTO.DestinationAddr;
 
                 _messageRepository.UpdateMessageAsync(foundMessage);
                 await _unitOfWork.CompleteAsync();
@@ -77,7 +77,7 @@ namespace Texter.Services.MessageServices
 
                 return new MessageResponse(messageResource);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new MessageResponse($"An error occurred when saving the message: {ex.Message}");
             }
