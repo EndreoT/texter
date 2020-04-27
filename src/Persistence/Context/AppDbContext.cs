@@ -17,7 +17,18 @@ namespace Texter.Persistence.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<Device>().HasIndex(b => b.Address).IsUnique();
+
+            builder.Entity<Device>().HasMany(d => d.SentMessages)
+                .WithOne(m => m.SourceAddr)
+                .HasForeignKey(m => m.SourceAddrDeviceId);
+
+            builder.Entity<Device>().HasMany(d => d.ReceiveMessages)
+                .WithOne(m => m.DestinationAddr)
+                .HasForeignKey(m => m.DestinationAddrDeviceId)
+                //.OnDelete(DeleteBehavior.Restrict)
+                ;
 
             Device device1 = new Device { DeviceId = 1, Address = "1234" };
             Device device2 = new Device { DeviceId = 2, Address = "5678" };
@@ -34,15 +45,15 @@ namespace Texter.Persistence.Context
                 {
                     MessageId = 100,
                     Content = "Apple",
-                    SourceAddr = device1.Address,
-                    DestinationAddr = device2.Address
+                    SourceAddrDeviceId = device1.DeviceId,
+                    DestinationAddrDeviceId = device2.DeviceId
                 },
                 new Message
                 {
                     MessageId = 103,
                     Content = "hi",
-                    SourceAddr = device2.Address,
-                    DestinationAddr = device1.Address
+                    SourceAddrDeviceId = device2.DeviceId,
+                    DestinationAddrDeviceId = device1.DeviceId
                 }
             );
         }

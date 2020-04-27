@@ -67,8 +67,8 @@ namespace Texter.Services.MessageServices
             {
                 //Update all the fields
                 foundMessage.Content = messageDTO.Content;
-                foundMessage.SourceAddr = messageDTO.SourceAddr;
-                foundMessage.DestinationAddr = messageDTO.DestinationAddr;
+                //foundMessage.SourceAddr = messageDTO.SourceAddr;
+                //foundMessage.DestinationAddr = messageDTO.DestinationAddr;
 
                 _messageRepository.UpdateMessageAsync(foundMessage);
                 await _unitOfWork.CompleteAsync();

@@ -12,10 +12,8 @@ namespace Texter.Domain.Models
         public long DeviceId { get; set; }
         public string Address { get; set; }
 
-        //[InverseProperty(nameof(Message.SourceAddr))]
-        //public List<Message> SentMessages { get; set; }
+        public ICollection<Message> SentMessages { get; set; }
 
-        //[InverseProperty(nameof(Message.DestinationAddr))]
-        //public List<Message> ReceiveMessages { get; set; }
+        public ICollection<Message> ReceiveMessages { get; set; }
     }
 }
