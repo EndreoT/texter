@@ -11,6 +11,8 @@ namespace Texter.Domain.RepositoryInterface.MessageRepository
     {
         public Task<IEnumerable<Message>> ListAsync();
 
+        public Task<IEnumerable<Message>> ListPopulateDeviceAsync();
+
         public Task<Message> GetByIdAsync(long id);
 
         public Task CreateMessageAsync(Message message);

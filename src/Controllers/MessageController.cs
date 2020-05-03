@@ -29,7 +29,7 @@ namespace Texter.Controllers
         [HttpGet]
         public async Task<IEnumerable<FromMessageDTO>> GetMessages()
         {
-            return await _messageService.ListAsync();
+            return await _messageService.ListPopultateDeviceAsync();
         }
 
         [HttpGet("{id}")]

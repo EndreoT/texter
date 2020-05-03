@@ -9,7 +9,7 @@ namespace Texter.Domain.Services
 {
     public interface IMessageService
     {
-        public Task<IEnumerable<FromMessageDTO>> ListAsync();
+        public Task<IEnumerable<FromMessageDTO>> ListPopultateDeviceAsync();
 
         public Task<FromMessageDTO> GetById(long id);
 

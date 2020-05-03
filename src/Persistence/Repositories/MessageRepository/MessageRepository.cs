@@ -22,12 +22,22 @@ namespace Texter.Persistence.Repositories.MessageRepository
             return await _context.Messages.ToListAsync();
         }
 
+        public async Task<IEnumerable<Message>> ListPopulateDeviceAsync()
+        {
+            return await _context.Messages
+                .Include(m => m.SourceAddr)
+                .Include(m => m.DestinationAddr)
+                .ToListAsync();
+        }
+
         public async Task<Message> GetByIdAsync(long id)
         {
             try
             {
                 return await _context.Messages
                    .Where(message => message.MessageId == id)
+                   .Include(m => m.SourceAddr)
+                   .Include(m => m.DestinationAddr)
                    .SingleAsync();
             } catch (InvalidOperationException)
             {

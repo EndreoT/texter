@@ -18,15 +18,19 @@ namespace Texter.Services.MessageServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MessageService(IMessageRepository messageRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public MessageService(
+            IMessageRepository messageRepository, 
+            IUnitOfWork unitOfWork, 
+            IMapper mapper)
         {
             _messageRepository = messageRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<FromMessageDTO>> ListAsync()
+
+        public async Task<IEnumerable<FromMessageDTO>> ListPopultateDeviceAsync()
         {
-            IEnumerable<Message> messages = await _messageRepository.ListAsync();
+            IEnumerable<Message> messages = await _messageRepository.ListPopulateDeviceAsync();
             IEnumerable<FromMessageDTO> resources = _mapper.Map<IEnumerable<Message>, IEnumerable<FromMessageDTO>>(messages);
             return resources;
         }

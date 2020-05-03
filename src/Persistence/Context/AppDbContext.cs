@@ -20,15 +20,13 @@ namespace Texter.Persistence.Context
 
             builder.Entity<Device>().HasIndex(b => b.Address).IsUnique();
 
-            builder.Entity<Device>().HasMany(d => d.SentMessages)
-                .WithOne(m => m.SourceAddr)
-                .HasForeignKey(m => m.SourceAddrDeviceId);
+            //builder.Entity<Device>().HasMany(d => d.SentMessages)
+            //    .WithOne(m => m.SourceAddr)
+            //    .HasForeignKey(m => m.SourceAddrDeviceId);
 
-            builder.Entity<Device>().HasMany(d => d.ReceiveMessages)
-                .WithOne(m => m.DestinationAddr)
-                .HasForeignKey(m => m.DestinationAddrDeviceId)
-                //.OnDelete(DeleteBehavior.Restrict)
-                ;
+            //builder.Entity<Device>().HasMany(d => d.ReceiveMessages)
+            //    .WithOne(m => m.DestinationAddr)
+            //    .HasForeignKey(m => m.DestinationAddrDeviceId);
 
             Device device1 = new Device { DeviceId = 1, Address = "1234" };
             Device device2 = new Device { DeviceId = 2, Address = "5678" };
