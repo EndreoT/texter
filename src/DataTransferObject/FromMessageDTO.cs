@@ -10,8 +10,9 @@ namespace Texter.DataTransferObject
     {
         public long MessageId { get; set; }
         public string Content { get; set; }
-        public string SourceAddr { get; set; }
-        public string DestinationAddr { get; set; }
-        
+
+        public Device SourceAddr { get; set; }
+        public Device DestinationAddr{ get; set; }
+
     }
 }
