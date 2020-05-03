@@ -19,6 +19,9 @@ using Texter.Domain.RepositoryInterface.MessageRepository;
 using Texter.Persistence.Repositories.MessageRepository;
 using Texter.Domain.RepositoryInterface;
 using Texter.Persistence.Repositories;
+using Texter.Domain.RepositoryInterface.DeviceRepository;
+using Texter.Persistence.Repositories.DeviceRepository;
+using Texter.Services.DeviceService;
 
 namespace Texter
 {
@@ -46,6 +49,8 @@ namespace Texter
             services.AddControllers();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IDeviceRepository, DeviceRepository>();
+            services.AddScoped<IDeviceService, DeviceService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
