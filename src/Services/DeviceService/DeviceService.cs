@@ -15,6 +15,12 @@ namespace Texter.Services.DeviceService
         {
             _deviceRepository = deviceRepository;
         }
+
+        public async Task<IEnumerable<Device>> ListAsync()
+        {
+            IEnumerable<Device> devices = await _deviceRepository.ListAsync();
+            return devices;
+        }
         public async Task<Device> GetByIdAsync(long id)
         {
             return await _deviceRepository.GetByIdAsync(id);
