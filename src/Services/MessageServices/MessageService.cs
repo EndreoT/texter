@@ -9,21 +9,25 @@ using Texter.DataTransferObject;
 using Texter.Domain.RepositoryInterface.MessageRepository;
 using Texter.Domain.RepositoryInterface;
 using Texter.Domain.Services.Communication;
+using Texter.Domain.RepositoryInterface.DeviceRepository;
 
 namespace Texter.Services.MessageServices
 {
     public class MessageService: IMessageService
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly IDeviceRepository _deviceRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public MessageService(
             IMessageRepository messageRepository, 
+            IDeviceRepository deviceRepository,
             IUnitOfWork unitOfWork, 
             IMapper mapper)
         {
             _messageRepository = messageRepository;
+            _deviceRepository = deviceRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -42,12 +46,41 @@ namespace Texter.Services.MessageServices
             return resource;
         }
 
-        public async Task<MessageResponse> CreateMessageAsync(SaveMessageDTO messageDTO)
+        private string DeviceNotFoundMessage(string deviceAddr)
         {
-            Message message = _mapper.Map<SaveMessageDTO, Message>(messageDTO);
-            
+            return $"Device with address {deviceAddr} does not exist";
+        }
+
+        public async Task<MessageResponse> CreateMessageAsync(SaveMessageDTO messageDTO)
+        {   
             try
             {
+                string sourceAddr = messageDTO.SourceAddr;
+                string destAddr = messageDTO.DestinationAddr;
+                Device sourceDevice = await _deviceRepository.GetByAddrAsync(sourceAddr);
+                Device destDevice = await _deviceRepository.GetByAddrAsync(destAddr);
+                if (sourceDevice == null || destDevice == null)
+                {
+                    string messageStr = "";
+                    if (sourceDevice == null)
+                    {
+                        messageStr = DeviceNotFoundMessage(sourceAddr);
+                    }
+                    else
+                    {
+                        messageStr = DeviceNotFoundMessage(destAddr);
+                    }
+                    return new MessageResponse(messageStr);
+                }
+                Message message = new Message()
+                {
+                    Content = messageDTO.Content,
+                    SourceAddr = sourceDevice,
+                    SourceAddrDeviceId = sourceDevice.DeviceId,
+                    DestinationAddr = destDevice,
+                    DestinationAddrDeviceId = destDevice.DeviceId
+                };
+
                 await _messageRepository.CreateMessageAsync(message);
                 await _unitOfWork.CompleteAsync();
 
