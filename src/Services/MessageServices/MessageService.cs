@@ -61,7 +61,7 @@ namespace Texter.Services.MessageServices
                 Device destDevice = await _deviceRepository.GetByAddrAsync(destAddr);
                 if (sourceDevice == null || destDevice == null)
                 {
-                    string messageStr = "";
+                    string messageStr;
                     if (sourceDevice == null)
                     {
                         messageStr = DeviceNotFoundMessage(sourceAddr);
@@ -100,12 +100,31 @@ namespace Texter.Services.MessageServices
             {
                 return new MessageResponse($"Message with id: {id} does not exist");
             }
+            string sourceAddr = messageDTO.SourceAddr;
+            string destAddr = messageDTO.DestinationAddr;
+            Device sourceDevice = await _deviceRepository.GetByAddrAsync(sourceAddr);
+            Device destDevice = await _deviceRepository.GetByAddrAsync(destAddr);
+            if (sourceDevice == null || destDevice == null)
+            {
+                string messageStr;
+                if (sourceDevice == null)
+                {
+                    messageStr = DeviceNotFoundMessage(sourceAddr);
+                }
+                else
+                {
+                    messageStr = DeviceNotFoundMessage(destAddr);
+                }
+                return new MessageResponse(messageStr);
+            }
             try
             {
                 //Update all the fields
                 foundMessage.Content = messageDTO.Content;
-                //foundMessage.SourceAddr = messageDTO.SourceAddr;
-                //foundMessage.DestinationAddr = messageDTO.DestinationAddr;
+                foundMessage.SourceAddr = sourceDevice;
+                foundMessage.SourceAddrDeviceId = sourceDevice.DeviceId;
+                foundMessage.DestinationAddr = destDevice;
+                foundMessage.DestinationAddrDeviceId = destDevice.DeviceId;
 
                 _messageRepository.UpdateMessageAsync(foundMessage);
                 await _unitOfWork.CompleteAsync();
