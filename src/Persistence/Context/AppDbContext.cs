@@ -31,11 +31,13 @@ namespace Texter.Persistence.Context
             Device device1 = new Device { DeviceId = 1, Address = "1234" };
             Device device2 = new Device { DeviceId = 2, Address = "5678" };
             Device device3 = new Device { DeviceId = 3, Address = "9101112" };
+            Device device4 = new Device { DeviceId = 4, Address = "246810" };
             builder.Entity<Device>().HasData
             (
                 device1,
-                device2
-                
+                device2,
+                device3,
+                device4
             );
 
             builder.Entity<Message>().HasData
