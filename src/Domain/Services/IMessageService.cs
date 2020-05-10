@@ -18,5 +18,7 @@ namespace Texter.Domain.Services
         public Task<MessageResponse> UpdateMessageAsync(long id, SaveMessageDTO messageDTO);
 
         public Task<MessageResponse> DeleteMessageAsync(long id);
+
+        public Task<IEnumerable<FromMessageDTO>> GetMessagesForDestDeviceAync(string deviceAddr);
     }
 }

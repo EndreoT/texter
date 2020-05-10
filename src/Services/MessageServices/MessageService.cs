@@ -160,5 +160,17 @@ namespace Texter.Services.MessageServices
                 return new MessageResponse($"An error occurred when deleting the message: {ex.Message}");
             }
         }
+
+        public async Task<IEnumerable<FromMessageDTO>> GetMessagesForDestDeviceAync(string deviceAddr)
+        {
+            Device device = await _deviceRepository.GetByAddrAsync(deviceAddr);
+            if (device == null)
+            {
+                return null;
+            }
+            IEnumerable<Message> messages = await _messageRepository.GetMessagesForDestDeviceAync(device);
+            IEnumerable<FromMessageDTO> resources = _mapper.Map<IEnumerable<Message>, IEnumerable<FromMessageDTO>>(messages);
+            return resources;
+        }
     }
 }

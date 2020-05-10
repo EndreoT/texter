@@ -86,6 +86,13 @@ namespace Texter.Controllers
 
             return Ok(result.MessageDTO);
         }
+
+        [HttpGet("device/{deviceAddr}")]
+        public async Task<IEnumerable<FromMessageDTO>> GetMessagesForDestDeviceAync(string deviceAddr)
+        {
+            
+            return await _messageService.GetMessagesForDestDeviceAync(deviceAddr);
+        }
     }
 
 }

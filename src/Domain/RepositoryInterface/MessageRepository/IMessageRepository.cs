@@ -21,5 +21,11 @@ namespace Texter.Domain.RepositoryInterface.MessageRepository
 
         public void DeleteMessageAsync(Message message);
 
+        /// <summary>
+        /// Retrieves all the messages destined for a device
+        /// </summary>
+        /// <param name="destDevice"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<Message>> GetMessagesForDestDeviceAync(Device destDevice);
     }
 }

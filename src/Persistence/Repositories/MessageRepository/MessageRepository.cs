@@ -59,5 +59,14 @@ namespace Texter.Persistence.Repositories.MessageRepository
         {
             _context.Messages.Remove(message);
         }
+
+        public async Task<IEnumerable<Message>> GetMessagesForDestDeviceAync(Device destDevice)
+        {
+            return await _context.Messages
+                .Where(m => m.DestinationAddrDeviceId == destDevice.DeviceId)
+                .Include(m => m.SourceAddr)
+                .Include(m => m.DestinationAddr)
+                .ToListAsync();
+        }
     }
 }
