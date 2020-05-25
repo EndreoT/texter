@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Texter</name>
+    </assembly>
+    <members>
+        <member name="M:Texter.Domain.RepositoryInterface.MessageRepository.IMessageRepository.GetMessagesForDestDeviceAync(Texter.Domain.Models.Device)">
+            <summary>
+            Retrieves all the messages destined for a device
+            </summary>
+            <param name="destDevice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Texter.Domain.Services.Communication.MessageResponse.#ctor(Texter.DataTransferObject.FromMessageDTO)">
+            <summary>
+            Creates a success response.
+            </summary>
+            <param name="message">Saved message.</param>
+            <returns>Response.</returns>
+        </member>
+        <member name="M:Texter.Domain.Services.Communication.MessageResponse.#ctor(System.String)">
+            <summary>
+            Creates an error response.
+            </summary>
+            <param name="message">Error message.</param>
+            <returns>Response.</returns>
+        </member>
+    </members>
+</doc>

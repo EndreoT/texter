@@ -5,10 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Texter.Domain.Models;
-using Texter.Persistence.Context;
 using Texter.Domain.Services;
-using Texter.Services.MessageServices;
 using Texter.DataTransferObject;
 using Texter.ExtensionMethods;
 using Texter.Domain.Services.Communication;
@@ -90,7 +87,6 @@ namespace Texter.Controllers
         [HttpGet("device/{deviceAddr}")]
         public async Task<IEnumerable<FromMessageDTO>> GetMessagesForDestDeviceAync(string deviceAddr)
         {
-            
             return await _messageService.GetMessagesForDestDeviceAync(deviceAddr);
         }
     }
