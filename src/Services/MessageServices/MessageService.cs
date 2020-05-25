@@ -19,17 +19,20 @@ namespace Texter.Services.MessageServices
         private readonly IDeviceRepository _deviceRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IInMemoryMessageService _inMemoryMessageService;
 
         public MessageService(
             IMessageRepository messageRepository, 
             IDeviceRepository deviceRepository,
             IUnitOfWork unitOfWork, 
-            IMapper mapper)
+            IMapper mapper,
+            IInMemoryMessageService inMemoryMessageService)
         {
             _messageRepository = messageRepository;
             _deviceRepository = deviceRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _inMemoryMessageService = inMemoryMessageService;
         }
 
         public async Task<IEnumerable<FromMessageDTO>> ListPopultateDeviceAsync()
@@ -83,6 +86,8 @@ namespace Texter.Services.MessageServices
 
                 await _messageRepository.CreateMessageAsync(message);
                 await _unitOfWork.CompleteAsync();
+
+                _inMemoryMessageService.AddMessage(sourceAddr, message);
 
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
 
