@@ -22,6 +22,7 @@ using Texter.Persistence.Repositories;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
 using Texter.Persistence.Repositories.DeviceRepository;
 using Texter.Services.DeviceService;
+using Texter.Services.InMemoryService;
 
 namespace Texter
 {
@@ -53,6 +54,7 @@ namespace Texter
             services.AddScoped<IDeviceService, DeviceService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IInMemoryMessageService, InMemoryMessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
