@@ -89,6 +89,11 @@ namespace Texter.Controllers
         {
             return await _messageService.GetMessagesForDestDeviceAync(deviceAddr);
         }
-    }
 
+        [HttpPost("device/mem/{deviceAddr}")]
+        public IEnumerable<FromMessageDTO> GetMessagesForDestDeviceFromMessageQueue(string deviceAddr)
+        {
+            return _messageService.GetMessagesForDestDeviceFromMessageMem(deviceAddr);
+        }
+    }
 }

@@ -28,9 +28,22 @@ namespace Texter.Services.InMemoryService
             else
             {
                 queue = new ConcurrentQueue<Message>();
-                _messages[address] = queue;
+                _messages.TryAdd(address, queue);
             }
             queue.Enqueue(message);
         }
+
+        public ConcurrentQueue<Message> GetMessagesForAddress(string address)
+        {
+            //if (!_messages.ContainsKey(address))
+            //{
+            //    return null;
+            //}
+            _ = _messages.TryRemove(address, out ConcurrentQueue<Message> messagesForAddr);
+
+            return messagesForAddr;
+        }
     }
+
+    
 }

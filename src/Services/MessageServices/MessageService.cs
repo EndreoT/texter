@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,6 +11,7 @@ using Texter.Domain.RepositoryInterface.MessageRepository;
 using Texter.Domain.RepositoryInterface;
 using Texter.Domain.Services.Communication;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Texter.Services.MessageServices
 {
@@ -87,7 +89,7 @@ namespace Texter.Services.MessageServices
                 await _messageRepository.CreateMessageAsync(message);
                 await _unitOfWork.CompleteAsync();
 
-                _inMemoryMessageService.AddMessage(sourceAddr, message);
+                _inMemoryMessageService.AddMessage(destAddr, message);
 
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
 
@@ -176,6 +178,23 @@ namespace Texter.Services.MessageServices
             IEnumerable<Message> messages = await _messageRepository.GetMessagesForDestDeviceAync(device);
             IEnumerable<FromMessageDTO> resources = _mapper.Map<IEnumerable<Message>, IEnumerable<FromMessageDTO>>(messages);
             return resources;
+        }
+
+        public IEnumerable<FromMessageDTO> GetMessagesForDestDeviceFromMessageMem(string deviceAddr)
+        {
+            ConcurrentQueue<Message> messages = _inMemoryMessageService.GetMessagesForAddress(deviceAddr);
+            if (messages == null)
+            {
+                return null;
+            }
+            List<FromMessageDTO> messageDTOEnumerator = new List<FromMessageDTO>();
+            foreach (Message message in messages)
+            {
+                FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
+                messageDTOEnumerator.Add(messageResource);
+            }
+
+        return messageDTOEnumerator;
         }
     }
 }
