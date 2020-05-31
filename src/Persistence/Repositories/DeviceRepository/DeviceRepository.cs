@@ -1,16 +1,12 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Texter.Persistence.Repositories;
-using Texter.Persistence.Context;
 using Texter.Domain.Models;
-using Texter.Domain.RepositoryInterface.MessageRepository;
-using Texter.DataTransferObject;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
+using Texter.Persistence.Context;
 
 namespace Texter.Persistence.Repositories.DeviceRepository
 {

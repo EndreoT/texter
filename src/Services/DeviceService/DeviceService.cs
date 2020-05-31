@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Texter.Domain.Models;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
@@ -8,7 +6,7 @@ using Texter.Domain.Services;
 
 namespace Texter.Services.DeviceService
 {
-    public class DeviceService: IDeviceService
+    public class DeviceService : IDeviceService
     {
         private readonly IDeviceRepository _deviceRepository;
         public DeviceService(IDeviceRepository deviceRepository)

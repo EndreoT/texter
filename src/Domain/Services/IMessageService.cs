@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Texter.Domain.Models;
 using Texter.DataTransferObject;
 using Texter.Domain.Services.Communication;
 
@@ -21,6 +19,6 @@ namespace Texter.Domain.Services
 
         public Task<IEnumerable<FromMessageDTO>> GetMessagesForDestDeviceAync(string deviceAddr);
 
-        public IEnumerable<FromMessageDTO> GetMessagesForDestDeviceFromMessageMem(string deviceAddr);
+        public IEnumerable<FromMessageDTO> ExtractMessagesForDestDeviceFromMessageMem(string deviceAddr);
     }
 }

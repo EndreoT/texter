@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 using Texter.Domain.Models;
 using Texter.Domain.Services;
 
 namespace Texter.Services.InMemoryService
 {
     //Singleton
-    public class InMemoryMessageService: IInMemoryMessageService
+    public class InMemoryMessageService : IInMemoryMessageService
     {
         private readonly ConcurrentDictionary<string, ConcurrentQueue<Message>> _messages;
 
@@ -33,17 +29,13 @@ namespace Texter.Services.InMemoryService
             queue.Enqueue(message);
         }
 
-        public ConcurrentQueue<Message> GetMessagesForAddress(string address)
+        public ConcurrentQueue<Message> ExtractMessagesForAddress(string address)
         {
-            //if (!_messages.ContainsKey(address))
-            //{
-            //    return null;
-            //}
-            _ = _messages.TryRemove(address, out ConcurrentQueue<Message> messagesForAddr);
+            _messages.TryRemove(address, out ConcurrentQueue<Message> messagesForAddr);
 
             return messagesForAddr;
         }
     }
 
-    
+
 }

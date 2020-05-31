@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Texter.Domain.Models;
 using Texter.DataTransferObject;
+using Texter.Domain.Models;
 
 namespace TexterMapping
 {

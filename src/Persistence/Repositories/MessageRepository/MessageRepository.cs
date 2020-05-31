@@ -1,19 +1,16 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Texter.Persistence.Repositories;
-using Texter.Persistence.Context;
 using Texter.Domain.Models;
 using Texter.Domain.RepositoryInterface.MessageRepository;
-using Texter.DataTransferObject;
+using Texter.Persistence.Context;
 
 namespace Texter.Persistence.Repositories.MessageRepository
 {
-    public class MessageRepository: BaseRepository, IMessageRepository
+    public class MessageRepository : BaseRepository, IMessageRepository
     {
         public MessageRepository(AppDbContext context) : base(context) { }
 
@@ -39,7 +36,8 @@ namespace Texter.Persistence.Repositories.MessageRepository
                    .Include(m => m.SourceAddr)
                    .Include(m => m.DestinationAddr)
                    .SingleAsync();
-            } catch (InvalidOperationException)
+            }
+            catch (InvalidOperationException)
             {
                 return null;
             }

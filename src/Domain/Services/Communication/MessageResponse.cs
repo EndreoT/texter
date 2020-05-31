@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Texter.DataTransferObject;
+﻿using Texter.DataTransferObject;
 
 namespace Texter.Domain.Services.Communication
 {

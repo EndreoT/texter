@@ -1,28 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Texter.Persistence.Context;
-using Texter.Domain.Services;
-using Texter.Services.MessageServices;
-using Texter.Domain.RepositoryInterface.MessageRepository;
-using Texter.Persistence.Repositories.MessageRepository;
 using Texter.Domain.RepositoryInterface;
-using Texter.Persistence.Repositories;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
+using Texter.Domain.RepositoryInterface.MessageRepository;
+using Texter.Domain.Services;
+using Texter.Persistence.Context;
+using Texter.Persistence.Repositories;
 using Texter.Persistence.Repositories.DeviceRepository;
+using Texter.Persistence.Repositories.MessageRepository;
 using Texter.Services.DeviceService;
 using Texter.Services.InMemoryService;
+using Texter.Services.MessageServices;
 
 namespace Texter
 {

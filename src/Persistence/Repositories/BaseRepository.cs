@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Texter.Persistence.Context;
+﻿using Texter.Persistence.Context;
 
 namespace Texter.Persistence.Repositories
 {

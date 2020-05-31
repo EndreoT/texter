@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using System;
 using System.Collections.Concurrent;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using Texter.Domain.Services;
-using Texter.Domain.Models;
 using Texter.DataTransferObject;
-using Texter.Domain.RepositoryInterface.MessageRepository;
+using Texter.Domain.Models;
 using Texter.Domain.RepositoryInterface;
-using Texter.Domain.Services.Communication;
 using Texter.Domain.RepositoryInterface.DeviceRepository;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Texter.Domain.RepositoryInterface.MessageRepository;
+using Texter.Domain.Services;
+using Texter.Domain.Services.Communication;
 
 namespace Texter.Services.MessageServices
 {
-    public class MessageService: IMessageService
+    public class MessageService : IMessageService
     {
         private readonly IMessageRepository _messageRepository;
         private readonly IDeviceRepository _deviceRepository;
@@ -24,9 +22,9 @@ namespace Texter.Services.MessageServices
         private readonly IInMemoryMessageService _inMemoryMessageService;
 
         public MessageService(
-            IMessageRepository messageRepository, 
+            IMessageRepository messageRepository,
             IDeviceRepository deviceRepository,
-            IUnitOfWork unitOfWork, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IInMemoryMessageService inMemoryMessageService)
         {
@@ -57,7 +55,7 @@ namespace Texter.Services.MessageServices
         }
 
         public async Task<MessageResponse> CreateMessageAsync(SaveMessageDTO messageDTO)
-        {   
+        {
             try
             {
                 string sourceAddr = messageDTO.SourceAddr;
@@ -94,8 +92,9 @@ namespace Texter.Services.MessageServices
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
 
                 return new MessageResponse(messageResource);
-            } catch (Exception ex)
-		    {
+            }
+            catch (Exception ex)
+            {
                 // Do some logging stuff
                 return new MessageResponse($"An error occurred when saving the message: {ex.Message}");
             }
@@ -180,21 +179,21 @@ namespace Texter.Services.MessageServices
             return resources;
         }
 
-        public IEnumerable<FromMessageDTO> GetMessagesForDestDeviceFromMessageMem(string deviceAddr)
+        public IEnumerable<FromMessageDTO> ExtractMessagesForDestDeviceFromMessageMem(string deviceAddr)
         {
-            ConcurrentQueue<Message> messages = _inMemoryMessageService.GetMessagesForAddress(deviceAddr);
+            ConcurrentQueue<Message> messages = _inMemoryMessageService.ExtractMessagesForAddress(deviceAddr);
             if (messages == null)
             {
                 return null;
             }
-            List<FromMessageDTO> messageDTOEnumerator = new List<FromMessageDTO>();
+            List<FromMessageDTO> messageDTOList = new List<FromMessageDTO>();
             foreach (Message message in messages)
             {
                 FromMessageDTO messageResource = _mapper.Map<Message, FromMessageDTO>(message);
-                messageDTOEnumerator.Add(messageResource);
+                messageDTOList.Add(messageResource);
             }
 
-        return messageDTOEnumerator;
+            return messageDTOList;
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Texter.Domain.Models;
 
 namespace Texter.Domain.Services
@@ -11,6 +7,6 @@ namespace Texter.Domain.Services
     {
         public void AddMessage(string address, Message message);
 
-        public ConcurrentQueue<Message> GetMessagesForAddress(string address);
+        public ConcurrentQueue<Message> ExtractMessagesForAddress(string address);
     }
 }

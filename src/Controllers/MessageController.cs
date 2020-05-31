@@ -1,17 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Texter.Domain.Services;
 using Texter.DataTransferObject;
-using Texter.ExtensionMethods;
+using Texter.Domain.Services;
 using Texter.Domain.Services.Communication;
+using Texter.ExtensionMethods;
 
 namespace Texter.Controllers
 {
+    [Route("api")]
     [Route("api/[controller]")]
     [ApiController]
     public class MessageController : ControllerBase
@@ -72,7 +69,6 @@ namespace Texter.Controllers
             return Ok(result.MessageDTO);
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(long id)
         {
@@ -90,10 +86,10 @@ namespace Texter.Controllers
             return await _messageService.GetMessagesForDestDeviceAync(deviceAddr);
         }
 
-        [HttpPost("device/mem/{deviceAddr}")]
-        public IEnumerable<FromMessageDTO> GetMessagesForDestDeviceFromMessageQueue(string deviceAddr)
+        [HttpPost("device/{deviceAddr}")]
+        public IEnumerable<FromMessageDTO> ExtractMessagesForDestDeviceFromMessageMem(string deviceAddr)
         {
-            return _messageService.GetMessagesForDestDeviceFromMessageMem(deviceAddr);
+            return _messageService.ExtractMessagesForDestDeviceFromMessageMem(deviceAddr);
         }
     }
 }
