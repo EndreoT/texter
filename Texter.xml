@@ -25,5 +25,10 @@
             <param name="message">Error message.</param>
             <returns>Response.</returns>
         </member>
+        <member name="T:Texter.Middleware.RequestLoggerMiddleware">
+            <summary>
+            Logs information about each request
+            </summary>
+        </member>
     </members>
 </doc>

@@ -9,6 +9,6 @@ namespace Texter.Domain.Services
         public Task<IEnumerable<Device>> ListAsync();
         public Task<Device> GetByIdAsync(long id);
 
-        public Task<Device> GetByAddrAsync(string addr);
+        public Task<Device> GetDeviceByAddrAsync(string addr);
     }
 }

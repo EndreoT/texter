@@ -16,28 +16,25 @@ using Texter.Persistence.Repositories.MessageRepository;
 using Texter.Services.DeviceService;
 using Texter.Services.InMemoryService;
 using Texter.Services.MessageServices;
+using Texter.Middleware;
+
 
 namespace Texter
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //services.AddDbContextPool<AppDbContext>(options => options
-            //    // replace with your connection string
-            //    .UseMySql("server=127.0.0.1;uid=root;pwd=1234;database=texter"
-            //));
+            string dbConnectionStr = Configuration["Database:ConnectionString"];
             services.AddDbContext<AppDbContext>(
-                item => item.UseMySql(Configuration.GetConnectionString("DefaultConnection"))
+                item => item.UseMySql(dbConnectionStr)
                 );
 
             services.AddControllers();
@@ -48,6 +45,8 @@ namespace Texter
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IInMemoryMessageService, InMemoryMessageService>();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,19 +55,34 @@ namespace Texter
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            app.UseMiddleware<RequestLoggerMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCors();
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
         }
     }
 }

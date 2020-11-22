@@ -23,5 +23,11 @@ namespace Texter.Controllers
         {
             return await _deviceService.ListAsync();
         }
+
+        [HttpGet("{deviceAddress}")]
+        public async Task<ActionResult<Device>> GetDeviceByAddrAsync(string deviceAddress)
+        {
+            return await _deviceService.GetDeviceByAddrAsync(deviceAddress);
+        }
     }
 }

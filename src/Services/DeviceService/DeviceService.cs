@@ -24,7 +24,7 @@ namespace Texter.Services.DeviceService
             return await _deviceRepository.GetByIdAsync(id);
         }
 
-        public async Task<Device> GetByAddrAsync(string address)
+        public async Task<Device> GetDeviceByAddrAsync(string address)
         {
             return await _deviceRepository.GetByAddrAsync(address);
         }

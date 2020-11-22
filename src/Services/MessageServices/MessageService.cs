@@ -83,7 +83,7 @@ namespace Texter.Services.MessageServices
                     DestinationAddr = destDevice,
                     DestinationAddrDeviceId = destDevice.DeviceId
                 };
-
+                //Save the message
                 await _messageRepository.CreateMessageAsync(message);
                 await _unitOfWork.CompleteAsync();
 
